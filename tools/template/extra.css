@@ -30,3 +30,4 @@ textarea.code{width:100%;min-height:90px;font:12px var(--f-mono);border:1px soli
 .result .grade{font-family:var(--f-display);font-weight:900;font-size:26px;color:var(--red);margin-left:10px}
 .inline-confirm{display:none}.inline-confirm.on{display:flex}
 @media print{aside.card,nav.tabs,header.top .src{display:none}}
+.txt table{border-collapse:collapse;margin:8px 0;font-size:14.5px;max-width:100%;display:block;overflow-x:auto}.txt th,.txt td{border:1px solid var(--rule);padding:3px 8px;text-align:center;white-space:nowrap}.txt th{background:var(--paper)}

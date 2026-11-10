@@ -49,7 +49,7 @@ const byId={};for(const s in BANK)for(const q of BANK[s])byId[q.id]=q;
 let st;
 function blank(){return{seen:{},wrong:{},cur:{},hist:{}}}
 function load(){try{st=JSON.parse(localStorage.getItem(KEY))||blank()}catch(e){st=blank()}
-  for(const k of ['seen','wrong','cur','hist'])st[k]=st[k]||{};
+  for(const k of ['seen','wrong','cur','hist','opt'])st[k]=st[k]||{};
   for(const s in st.wrong)for(const id in st.wrong[s])if(!byId[id])delete st.wrong[s][id];}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
 load();
@@ -66,20 +66,32 @@ const seenOf=s=>new Set(st.seen[s]||[]);
 
 /* ---------- drawing a test ---------- */
 function units(s){const m=new Map();for(const q of BANK[s]){const k=q.grp||q.id;if(!m.has(k))m.set(k,[]);m.get(k).push(q.id)}return [...m.values()]}
+const isNew=u=>{const q=byId[u[0]];return q.y==='ak'||+q.y>=111};
+const newOnly=()=>!!(st.opt&&st.opt.newOnly);
+function pickFrom(list,N,gq,seen){
+  const fresh=u=>!u.some(id=>seen.has(id));
+  const order=l=>[...shuffle(l.filter(fresh)),...shuffle(l.filter(u=>!fresh(u)))];
+  const groups=order(list.filter(u=>u.length>1)), singles=order(list.filter(u=>u.length===1));
+  const target=Math.round(N*gq);
+  const G=[],S=[];let gc=0;const used=new Set();
+  groups.forEach((u,i)=>{if(gc+u.length<=target+1&&gc+u.length<=N){G.push(u);gc+=u.length;used.add(i)}});
+  for(const u of singles){if(gc+S.length>=N)break;S.push(u)}
+  groups.forEach((u,i)=>{if(!used.has(i)&&gc+S.length+u.length<=N){G.push(u);gc+=u.length}});
+  return {S,G,n:gc+S.length};
+}
 function draw(s){
   const N=SUBJ[s].n, wr=wrongOf(s), seen=seenOf(s);
   const all=units(s).filter(u=>!u.some(id=>id in wr));
-  const fresh=u=>!u.some(id=>seen.has(id));
-  const order=list=>[...shuffle(list.filter(fresh)),...shuffle(list.filter(u=>!fresh(u)))];
-  const groups=order(all.filter(u=>u.length>1)), singles=order(all.filter(u=>u.length===1));
   const gq=BANK[s].filter(q=>q.grp).length/BANK[s].length;
-  const target=Math.round(N*gq);
-  const pickG=[],pickS=[];let gc=0;
-  const used=new Set();
-  groups.forEach((u,i)=>{if(gc+u.length<=target+1&&gc+u.length<=N){pickG.push(u);gc+=u.length;used.add(i)}});
-  for(const u of singles){if(gc+pickS.length>=N)break;pickS.push(u)}
-  groups.forEach((u,i)=>{if(!used.has(i)&&gc+pickS.length+u.length<=N){pickG.push(u);gc+=u.length}});
-  return [...pickS.flat(),...pickG.flat()];
+  let S=[],G=[],n=0;
+  const add=r=>{S.push(...r.S);G.push(...r.G);n+=r.n};
+  if(newOnly())add(pickFrom(all.filter(isNew),N,gq,seen));
+  else{
+    add(pickFrom(all.filter(isNew),Math.round(N*0.7),gq,seen));
+    add(pickFrom(all.filter(u=>!isNew(u)),N-n,gq,seen));
+    if(n<N){const got=new Set([...S,...G].map(u=>u[0]));add(pickFrom(all.filter(u=>!got.has(u[0])),N-n,gq,seen))}
+  }
+  return [...shuffle(S).flat(),...shuffle(G).flat()];
 }
 function startTest(mode){
   let ids;
@@ -125,7 +137,8 @@ function renderHome(){
   const S=SUBJ[subj],qs=BANK[subj],wr=wrongOf(subj),seen=seenOf(subj);
   const nOff=qs.filter(q=>q.y!=='ak').length,nAk=qs.length-nOff;
   const years=[...new Set(qs.filter(q=>q.y!=='ak').map(q=>+q.y))].sort((a,b)=>a-b);
-  const avail=qs.filter(q=>!(q.id in wr)).length, unseen=qs.filter(q=>!(q.id in wr)&&!seen.has(q.id)).length;
+  const isN=q=>q.y==='ak'||+q.y>=111;
+  const avail=qs.filter(q=>!(q.id in wr)&&(!newOnly()||isN(q))).length, unseen=qs.filter(q=>!(q.id in wr)&&!seen.has(q.id)).length;
   const nw=Object.keys(wr).length;
   const h=(st.hist[subj]||[]).slice(-8).reverse();
   $('home').innerHTML=`<div class="home">
@@ -142,7 +155,8 @@ function renderHome(){
       <button class="btn" id="gow" ${nw?'':'disabled'}>練習錯題區（${nw} 題）</button>
       <button class="btn ghost" id="rev" ${nw?'':'disabled'}>瀏覽錯題</button>
     </div>
-    <p class="muted" style="margin:12px 0 0">每次從題庫隨機抽 ${S.n} 題（和會考題數一樣），先抽沒做過的。答錯或沒作答的題目會進錯題區，不會再被抽到；在錯題區<b>連續答對 2 次</b>才移出，回到題庫。收錄 ${years[0]}–${years[years.length-1]} 年${subj==='english'?'（缺 108 年）':''}。${NOTE[subj]||''}</p>
+    <label class="chk" style="margin-top:12px"><input type="checkbox" id="newonly" ${newOnly()?'checked':''}> 只出新課綱題目（111 年以後＋阿克題），適合考前衝刺</label>
+    <p class="muted" style="margin:12px 0 0">每次從題庫隨機抽 ${S.n} 題（和會考題數一樣），先抽沒做過的。${newOnly()?'目前只出 111 年以後（108 課綱）和阿克題。':'約 7 成抽 111 年以後（108 課綱）和阿克題，3 成抽 104–110 年的舊題。'}答錯或沒作答的題目會進錯題區，不會再被抽到；在錯題區<b>連續答對 2 次</b>才移出，回到題庫。收錄 ${years[0]}–${years[years.length-1]} 年${subj==='english'?'（缺 108 年）':''}。${NOTE[subj]||''}</p>
   </div>
   ${h.length?`<div class="box"><h3>最近紀錄</h3><ul class="hist">${h.map(r=>`<li><span>${r.d} <span class="m">${r.m==='wrong'?'錯題區':'測驗'}</span></span><span>${r.ok}/${r.n}${r.g?'・'+r.g:''}${r.out?` <span class="m">移出 ${r.out}</span>`:''}</span></li>`).join('')}</ul></div>`:''}
   <div class="box">
@@ -154,7 +168,8 @@ function renderHome(){
   </div>
   <p class="muted">102、103 年的官方試卷是掃描檔，沒辦法切成單題，所以沒有收錄。詳解：較難的題目（全國答對率低於 6 成）會附說明，已完成 ${expYears(subj)}與阿克題，其他年份陸續補上。</p>
   </div>`;
-  $('go').onclick=()=>startTest('test');$('gow').onclick=()=>startTest('wrong');
+  $('go').onclick=()=>startTest('test');
+  $('newonly').onchange=e=>{st.opt=st.opt||{};st.opt.newOnly=e.target.checked;save();renderHome()};$('gow').onclick=()=>startTest('wrong');
   $('rev').onclick=()=>{view='review';show();window.scrollTo(0,0)};
   $('mk').onclick=async()=>{$('code').value=await exportCode();$('cp').hidden=false;msg('備份碼已產生。請整段複製保存。')};
   $('cp').onclick=async()=>{try{await navigator.clipboard.writeText($('code').value);msg('已複製')}catch(e){$('code').select();msg('請長按文字框選取後複製',1)}};

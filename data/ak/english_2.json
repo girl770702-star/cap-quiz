@@ -1,0 +1,308 @@
+{
+ "subject": "english",
+ "id": "ak2",
+ "label": "阿克提供・素養題",
+ "min": 40,
+ "qs": [
+  {
+   "n": 1,
+   "topic": "素養：公告閱讀",
+   "html": "Why is the library closed in early July?",
+   "opts": [
+    "Students are on a school trip.",
+    "Workers are putting in new bookshelves.",
+    "The librarian is sick.",
+    "The books are being moved to another school."
+   ],
+   "ans": "B",
+   "exp": "公告第一句說 because workers are putting in new bookshelves，工人在裝新書架。",
+   "grp": "1～4",
+   "passage": "<p><b>Greenhill Junior High Library — Summer Notice</b></p><p>The library will be closed from July 1 to July 14 because workers are putting in new bookshelves.</p><p>From July 15 to August 25, it will be open Monday to Friday, 9:00 a.m. – 3:00 p.m. Students can borrow up to 5 paper books at a time and keep them for 3 weeks. Late fees for paper books: NT$5 per book per day.</p><p>Can't come to the library? Try our e-book app, <i>ReadGo</i>! Log in with your student number and borrow up to 3 e-books. E-books go back by themselves after 14 days, so you never pay late fees.</p>"
+  },
+  {
+   "n": 2,
+   "topic": "素養：公告閱讀",
+   "html": "Amy borrows 5 paper books on July 20. By which day should she return them to avoid late fees?",
+   "opts": [
+    "July 27",
+    "August 3",
+    "August 10",
+    "August 17"
+   ],
+   "ans": "C",
+   "exp": "紙本書可借 3 週（21 天），7 月 20 日加 21 天是 8 月 10 日。",
+   "grp": "1～4",
+   "passage": "<p><b>Greenhill Junior High Library — Summer Notice</b></p><p>The library will be closed from July 1 to July 14 because workers are putting in new bookshelves.</p><p>From July 15 to August 25, it will be open Monday to Friday, 9:00 a.m. – 3:00 p.m. Students can borrow up to 5 paper books at a time and keep them for 3 weeks. Late fees for paper books: NT$5 per book per day.</p><p>Can't come to the library? Try our e-book app, <i>ReadGo</i>! Log in with your student number and borrow up to 3 e-books. E-books go back by themselves after 14 days, so you never pay late fees.</p>"
+  },
+  {
+   "n": 3,
+   "topic": "素養：公告閱讀",
+   "html": "Which is true about ReadGo?",
+   "opts": [
+    "Borrowed e-books go back by themselves after two weeks.",
+    "Students need to pay to log in.",
+    "Students can borrow more e-books than paper books.",
+    "Late e-books cost NT$5 a day."
+   ],
+   "ans": "A",
+   "exp": "公告說 E-books go back by themselves after 14 days（14 天＝兩週）。電子書最多 3 本，比紙本 5 本少；電子書也沒有逾期費。",
+   "grp": "1～4",
+   "passage": "<p><b>Greenhill Junior High Library — Summer Notice</b></p><p>The library will be closed from July 1 to July 14 because workers are putting in new bookshelves.</p><p>From July 15 to August 25, it will be open Monday to Friday, 9:00 a.m. – 3:00 p.m. Students can borrow up to 5 paper books at a time and keep them for 3 weeks. Late fees for paper books: NT$5 per book per day.</p><p>Can't come to the library? Try our e-book app, <i>ReadGo</i>! Log in with your student number and borrow up to 3 e-books. E-books go back by themselves after 14 days, so you never pay late fees.</p>"
+  },
+  {
+   "n": 4,
+   "topic": "素養：公告閱讀",
+   "html": "Ken returned 2 paper books 4 days late. How much does he need to pay?",
+   "opts": [
+    "NT$20",
+    "NT$30",
+    "NT$35",
+    "NT$40"
+   ],
+   "ans": "D",
+   "exp": "每本每天 5 元：2 本×4 天×5 元＝40 元。",
+   "grp": "1～4",
+   "passage": "<p><b>Greenhill Junior High Library — Summer Notice</b></p><p>The library will be closed from July 1 to July 14 because workers are putting in new bookshelves.</p><p>From July 15 to August 25, it will be open Monday to Friday, 9:00 a.m. – 3:00 p.m. Students can borrow up to 5 paper books at a time and keep them for 3 weeks. Late fees for paper books: NT$5 per book per day.</p><p>Can't come to the library? Try our e-book app, <i>ReadGo</i>! Log in with your student number and borrow up to 3 e-books. E-books go back by themselves after 14 days, so you never pay late fees.</p>"
+  },
+  {
+   "n": 5,
+   "topic": "素養：圖表判讀",
+   "html": "How many students use their phones for more than 3 hours on a school day?",
+   "opts": [
+    "24",
+    "56",
+    "80",
+    "90"
+   ],
+   "ans": "C",
+   "exp": "超過 3 小時包括 3–5 hours（56 人）和 More than 5 hours（24 人），共 80 人。",
+   "grp": "5～8",
+   "passage": "<p>A survey asked 200 students at Lin's school: “How many hours do you spend on your phone on a school day?”</p><p>Less than 1 hour: 30 students　1–3 hours: 90 students<br>3–5 hours: 56 students　More than 5 hours: 24 students</p><p>Most students said they use their phones for watching videos (62%), chatting with friends (21%), and studying (11%).</p><p>The school nurse, Ms. Chen, says, “Teenagers need 8 to 10 hours of sleep. If you use your phone in bed, the light makes it harder to fall asleep. Try putting your phone outside your bedroom one hour before bedtime.”</p>"
+  },
+  {
+   "n": 6,
+   "topic": "素養：圖表判讀",
+   "html": "What do most students use their phones for?",
+   "opts": [
+    "Studying.",
+    "Chatting with friends.",
+    "Playing games.",
+    "Watching videos."
+   ],
+   "ans": "D",
+   "exp": "watching videos 占 62%，是最多的用途。文中沒有提到玩遊戲。",
+   "grp": "5～8",
+   "passage": "<p>A survey asked 200 students at Lin's school: “How many hours do you spend on your phone on a school day?”</p><p>Less than 1 hour: 30 students　1–3 hours: 90 students<br>3–5 hours: 56 students　More than 5 hours: 24 students</p><p>Most students said they use their phones for watching videos (62%), chatting with friends (21%), and studying (11%).</p><p>The school nurse, Ms. Chen, says, “Teenagers need 8 to 10 hours of sleep. If you use your phone in bed, the light makes it harder to fall asleep. Try putting your phone outside your bedroom one hour before bedtime.”</p>"
+  },
+  {
+   "n": 7,
+   "topic": "素養：圖表判讀",
+   "html": "What does Ms. Chen suggest?",
+   "opts": [
+    "Students should stop using phones at school.",
+    "Students should leave their phones outside the bedroom before bed.",
+    "Students should sleep less than 8 hours.",
+    "Students should only use phones to study."
+   ],
+   "ans": "B",
+   "exp": "護理師建議 putting your phone outside your bedroom one hour before bedtime，睡前把手機放在房間外。",
+   "grp": "5～8",
+   "passage": "<p>A survey asked 200 students at Lin's school: “How many hours do you spend on your phone on a school day?”</p><p>Less than 1 hour: 30 students　1–3 hours: 90 students<br>3–5 hours: 56 students　More than 5 hours: 24 students</p><p>Most students said they use their phones for watching videos (62%), chatting with friends (21%), and studying (11%).</p><p>The school nurse, Ms. Chen, says, “Teenagers need 8 to 10 hours of sleep. If you use your phone in bed, the light makes it harder to fall asleep. Try putting your phone outside your bedroom one hour before bedtime.”</p>"
+  },
+  {
+   "n": 8,
+   "topic": "素養：圖表判讀",
+   "html": "What is the main purpose of this passage?",
+   "opts": [
+    "To share survey results and give advice.",
+    "To sell new phones.",
+    "To ask students to join a game.",
+    "To tell a story about a nurse."
+   ],
+   "ans": "A",
+   "exp": "文章先報告問卷結果，再引用護理師的睡眠建議。",
+   "grp": "5～8",
+   "passage": "<p>A survey asked 200 students at Lin's school: “How many hours do you spend on your phone on a school day?”</p><p>Less than 1 hour: 30 students　1–3 hours: 90 students<br>3–5 hours: 56 students　More than 5 hours: 24 students</p><p>Most students said they use their phones for watching videos (62%), chatting with friends (21%), and studying (11%).</p><p>The school nurse, Ms. Chen, says, “Teenagers need 8 to 10 hours of sleep. If you use your phone in bed, the light makes it harder to fall asleep. Try putting your phone outside your bedroom one hour before bedtime.”</p>"
+  },
+  {
+   "n": 9,
+   "topic": "素養：電子郵件",
+   "html": "Why did Jenny write to FitWear?",
+   "opts": [
+    "She wanted her money back.",
+    "She got shoes in the wrong size.",
+    "The shoes were broken.",
+    "She wanted another color."
+   ],
+   "ans": "B",
+   "exp": "她訂 size 7，收到的卻是 size 8，尺寸錯了。",
+   "grp": "9～12",
+   "passage": "<p><b>From:</b> Jenny Wu　<b>To:</b> FitWear Customer Service<br><b>Subject:</b> Wrong size</p><p>Hi, I ordered a pair of running shoes (size 7) on your website on May 3, but the shoes I got on May 6 are size 8. I need them for a race on May 20. Could you send me the right size before then? I've put the shoes back in the box. Please tell me how to send them back.<br>Jenny</p><p>—</p><p>Dear Jenny,<br>We're sorry! We'll send you a size 7 pair today, and it should arrive in two to three days. You don't need to pay for anything. When the delivery person brings your new shoes, just give him the box with the wrong pair.<br>FitWear Customer Service (May 8)</p>"
+  },
+  {
+   "n": 10,
+   "topic": "素養：電子郵件",
+   "html": "When will Jenny probably get the new shoes?",
+   "opts": [
+    "On May 6.",
+    "On May 8.",
+    "Around May 11.",
+    "After May 20."
+   ],
+   "ans": "C",
+   "exp": "客服 5 月 8 日回信說今天寄出，二到三天會到，所以大約 5 月 10～11 日。",
+   "grp": "9～12",
+   "passage": "<p><b>From:</b> Jenny Wu　<b>To:</b> FitWear Customer Service<br><b>Subject:</b> Wrong size</p><p>Hi, I ordered a pair of running shoes (size 7) on your website on May 3, but the shoes I got on May 6 are size 8. I need them for a race on May 20. Could you send me the right size before then? I've put the shoes back in the box. Please tell me how to send them back.<br>Jenny</p><p>—</p><p>Dear Jenny,<br>We're sorry! We'll send you a size 7 pair today, and it should arrive in two to three days. You don't need to pay for anything. When the delivery person brings your new shoes, just give him the box with the wrong pair.<br>FitWear Customer Service (May 8)</p>"
+  },
+  {
+   "n": 11,
+   "topic": "素養：電子郵件",
+   "html": "How will Jenny send back the wrong shoes?",
+   "opts": [
+    "She will mail them herself.",
+    "She will take them to a store.",
+    "She will keep them.",
+    "She will give them to the delivery person."
+   ],
+   "ans": "D",
+   "exp": "客服說 just give him the box with the wrong pair，把舊鞋交給送新鞋來的人就好。",
+   "grp": "9～12",
+   "passage": "<p><b>From:</b> Jenny Wu　<b>To:</b> FitWear Customer Service<br><b>Subject:</b> Wrong size</p><p>Hi, I ordered a pair of running shoes (size 7) on your website on May 3, but the shoes I got on May 6 are size 8. I need them for a race on May 20. Could you send me the right size before then? I've put the shoes back in the box. Please tell me how to send them back.<br>Jenny</p><p>—</p><p>Dear Jenny,<br>We're sorry! We'll send you a size 7 pair today, and it should arrive in two to three days. You don't need to pay for anything. When the delivery person brings your new shoes, just give him the box with the wrong pair.<br>FitWear Customer Service (May 8)</p>"
+  },
+  {
+   "n": 12,
+   "topic": "素養：電子郵件",
+   "html": "What do we know about the running shoes?",
+   "opts": [
+    "Jenny needs them for a race.",
+    "Jenny bought them in a store.",
+    "They cost a lot of money.",
+    "They arrived on May 3."
+   ],
+   "ans": "A",
+   "exp": "Jenny 說 I need them for a race on May 20。她是在網站上訂的，5 月 3 日是訂購日、5 月 6 日才收到。",
+   "grp": "9～12",
+   "passage": "<p><b>From:</b> Jenny Wu　<b>To:</b> FitWear Customer Service<br><b>Subject:</b> Wrong size</p><p>Hi, I ordered a pair of running shoes (size 7) on your website on May 3, but the shoes I got on May 6 are size 8. I need them for a race on May 20. Could you send me the right size before then? I've put the shoes back in the box. Please tell me how to send them back.<br>Jenny</p><p>—</p><p>Dear Jenny,<br>We're sorry! We'll send you a size 7 pair today, and it should arrive in two to three days. You don't need to pay for anything. When the delivery person brings your new shoes, just give him the box with the wrong pair.<br>FitWear Customer Service (May 8)</p>"
+  },
+  {
+   "n": 13,
+   "topic": "素養：活動海報",
+   "html": "If it rains on October 18, when will the clean-up be?",
+   "opts": [
+    "October 10.",
+    "October 17.",
+    "October 18.",
+    "October 19."
+   ],
+   "ans": "D",
+   "exp": "海報說 If it rains, we'll do it on Sunday, October 19。10 月 10 日是報名截止日。",
+   "grp": "13～16",
+   "passage": "<p><b>Join the Blue Coast Beach Clean-up!</b></p><p>Date: Saturday, October 18 (If it rains, we'll do it on Sunday, October 19.)<br>Time: 8:00–11:00 a.m.<br>Meet at: the bus stop in front of Sunny Beach<br>Bring: a hat, a water bottle, and gloves. We'll give you trash bags.</p><p>Last year, 150 volunteers picked up 600 kg of trash. Over half of it was plastic: bottle caps, straws, and food boxes.</p><p>This year, every volunteer who brings their own water bottle gets a free T-shirt! Sign up online by October 10.</p>"
+  },
+  {
+   "n": 14,
+   "topic": "素養：活動海報",
+   "html": "What do volunteers NOT need to bring?",
+   "opts": [
+    "Trash bags.",
+    "Gloves.",
+    "A hat.",
+    "A water bottle."
+   ],
+   "ans": "A",
+   "exp": "主辦單位說 We'll give you trash bags，垃圾袋會提供。帽子、水壺、手套要自己帶。",
+   "grp": "13～16",
+   "passage": "<p><b>Join the Blue Coast Beach Clean-up!</b></p><p>Date: Saturday, October 18 (If it rains, we'll do it on Sunday, October 19.)<br>Time: 8:00–11:00 a.m.<br>Meet at: the bus stop in front of Sunny Beach<br>Bring: a hat, a water bottle, and gloves. We'll give you trash bags.</p><p>Last year, 150 volunteers picked up 600 kg of trash. Over half of it was plastic: bottle caps, straws, and food boxes.</p><p>This year, every volunteer who brings their own water bottle gets a free T-shirt! Sign up online by October 10.</p>"
+  },
+  {
+   "n": 15,
+   "topic": "素養：活動海報",
+   "html": "On average, how much trash did each volunteer pick up last year?",
+   "opts": [
+    "2 kg",
+    "4 kg",
+    "6 kg",
+    "15 kg"
+   ],
+   "ans": "B",
+   "exp": "600 kg÷150 人＝4 kg。",
+   "grp": "13～16",
+   "passage": "<p><b>Join the Blue Coast Beach Clean-up!</b></p><p>Date: Saturday, October 18 (If it rains, we'll do it on Sunday, October 19.)<br>Time: 8:00–11:00 a.m.<br>Meet at: the bus stop in front of Sunny Beach<br>Bring: a hat, a water bottle, and gloves. We'll give you trash bags.</p><p>Last year, 150 volunteers picked up 600 kg of trash. Over half of it was plastic: bottle caps, straws, and food boxes.</p><p>This year, every volunteer who brings their own water bottle gets a free T-shirt! Sign up online by October 10.</p>"
+  },
+  {
+   "n": 16,
+   "topic": "素養：活動海報",
+   "html": "How can a volunteer get a free T-shirt?",
+   "opts": [
+    "By signing up first.",
+    "By picking up the most trash.",
+    "By bringing their own water bottle.",
+    "By coming on Sunday."
+   ],
+   "ans": "C",
+   "exp": "海報說 every volunteer who brings their own water bottle gets a free T-shirt。",
+   "grp": "13～16",
+   "passage": "<p><b>Join the Blue Coast Beach Clean-up!</b></p><p>Date: Saturday, October 18 (If it rains, we'll do it on Sunday, October 19.)<br>Time: 8:00–11:00 a.m.<br>Meet at: the bus stop in front of Sunny Beach<br>Bring: a hat, a water bottle, and gloves. We'll give you trash bags.</p><p>Last year, 150 volunteers picked up 600 kg of trash. Over half of it was plastic: bottle caps, straws, and food boxes.</p><p>This year, every volunteer who brings their own water bottle gets a free T-shirt! Sign up online by October 10.</p>"
+  },
+  {
+   "n": 17,
+   "topic": "素養：短文閱讀",
+   "html": "Why did Grandpa have trouble reading the newspaper?",
+   "opts": [
+    "He was too busy.",
+    "He couldn't see well.",
+    "The newspaper stopped coming.",
+    "His phone was broken."
+   ],
+   "ans": "B",
+   "exp": "第一句說 Grandpa started to lose his eyesight，視力變差。",
+   "grp": "17～20",
+   "passage": "<p>Last year, Tom's grandpa started to lose his eyesight. Reading the newspaper, his favorite morning activity, became hard. Tom found an app that reads words out loud: Grandpa just points his phone's camera at the page.</p><p>At first, Grandpa didn't want to use it. “Phones are for young people,” he said. So Tom made a plan. Every Sunday, he sat with Grandpa and practiced with him for half an hour. After a month, Grandpa could use the app by himself.</p><p>Now he even uses it to read the bus timetable and the labels on his medicine. “My grandson gave me my newspaper back,” he tells his friends.</p>"
+  },
+  {
+   "n": 18,
+   "topic": "素養：短文閱讀",
+   "html": "What did Grandpa think of the app at first?",
+   "opts": [
+    "He didn't want to use it.",
+    "He thought it was easy.",
+    "He wanted to buy it.",
+    "He asked Tom to find it."
+   ],
+   "ans": "A",
+   "exp": "At first, Grandpa didn't want to use it. 他覺得手機是年輕人用的。",
+   "grp": "17～20",
+   "passage": "<p>Last year, Tom's grandpa started to lose his eyesight. Reading the newspaper, his favorite morning activity, became hard. Tom found an app that reads words out loud: Grandpa just points his phone's camera at the page.</p><p>At first, Grandpa didn't want to use it. “Phones are for young people,” he said. So Tom made a plan. Every Sunday, he sat with Grandpa and practiced with him for half an hour. After a month, Grandpa could use the app by himself.</p><p>Now he even uses it to read the bus timetable and the labels on his medicine. “My grandson gave me my newspaper back,” he tells his friends.</p>"
+  },
+  {
+   "n": 19,
+   "topic": "素養：短文閱讀",
+   "html": "What does Grandpa mean by “My grandson gave me my newspaper back”?",
+   "opts": [
+    "Tom bought him a new newspaper.",
+    "Tom returned a newspaper he took.",
+    "With Tom's help, he can read the newspaper again.",
+    "Tom reads the newspaper to him every day."
+   ],
+   "ans": "C",
+   "exp": "這是比喻：在 Tom 的幫助下，爺爺學會用 APP，又能自己「讀」報紙了。",
+   "grp": "17～20",
+   "passage": "<p>Last year, Tom's grandpa started to lose his eyesight. Reading the newspaper, his favorite morning activity, became hard. Tom found an app that reads words out loud: Grandpa just points his phone's camera at the page.</p><p>At first, Grandpa didn't want to use it. “Phones are for young people,” he said. So Tom made a plan. Every Sunday, he sat with Grandpa and practiced with him for half an hour. After a month, Grandpa could use the app by himself.</p><p>Now he even uses it to read the bus timetable and the labels on his medicine. “My grandson gave me my newspaper back,” he tells his friends.</p>"
+  },
+  {
+   "n": 20,
+   "topic": "素養：短文閱讀",
+   "html": "What can we learn about Tom?",
+   "opts": [
+    "He doesn't like newspapers.",
+    "He made the app himself.",
+    "He thinks phones are for young people.",
+    "He spent time helping his grandpa learn something new."
+   ],
+   "ans": "D",
+   "exp": "Tom 每週日花半小時陪爺爺練習，一個月後爺爺就會自己用了。說「手機是年輕人用的」是爺爺。",
+   "grp": "17～20",
+   "passage": "<p>Last year, Tom's grandpa started to lose his eyesight. Reading the newspaper, his favorite morning activity, became hard. Tom found an app that reads words out loud: Grandpa just points his phone's camera at the page.</p><p>At first, Grandpa didn't want to use it. “Phones are for young people,” he said. So Tom made a plan. Every Sunday, he sat with Grandpa and practiced with him for half an hour. After a month, Grandpa could use the app by himself.</p><p>Now he even uses it to read the bus timetable and the labels on his medicine. “My grandson gave me my newspaper back,” he tells his friends.</p>"
+  }
+ ]
+}

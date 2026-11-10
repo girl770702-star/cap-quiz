@@ -16,6 +16,7 @@ Reply to the user in Traditional Chinese (Taiwan), plainly, with no jargon. The 
   - 社會 54
   - 自然 50
 - How a test is drawn:
+  - about 70% from the 108 curriculum (111 and later, plus all 阿克 questions) and 30% from 104–110; a 「只出新課綱題目」 checkbox (`st.opt.newOnly`) limits draws to 111+ and 阿克
   - unseen questions come first
   - a 題組 (group of questions sharing a passage) is drawn whole
   - single questions come first, then groups
@@ -23,7 +24,7 @@ Reply to the user in Traditional Chinese (Taiwan), plainly, with no jargon. The 
   - a wrong or unanswered question goes in and is left out of random draws
   - it leaves only after **2 consecutive correct** answers inside the 錯題區
 - State is kept in the tablet browser's localStorage (key `cap-quiz-v1`).
-  - Keep that key and its data shape (`seen/wrong/cur/hist/wa`; `wa` records the last answers, used by 瀏覽錯題) backward-compatible, or the child loses records.
+  - Keep that key and its data shape (`seen/wrong/cur/hist/wa/opt`; `wa` records the last answers, used by 瀏覽錯題) backward-compatible, or the child loses records.
   - A 備份碼 (backup code) on the page exports and imports that state.
 - After a test is submitted:
   - each question shows its explanation if it has one
@@ -50,7 +51,8 @@ Reply to the user in Traditional Chinese (Taiwan), plainly, with no jargon. The 
 - `data/meta/{year}.json` holds official analysis data: `{subject: {n: {goal, pr}}}`.
   - `pr` is the national pass rate in percent.
   - Only 114 and 115 have it so far.
-- `data/ak/{subject}_{k}.json` holds 阿克 question sets:
+- `data/ak/{subject}_{k}.json` holds 阿克 question sets (`_1` = basic set, `_2` = 素養題 in the style of 108-curriculum questions: real-life contexts, tables, long reading). HTML `<table>` is allowed in `html`/`passage`.
+
   - each has `{subject, qs: [{n, html, opts[4], ans, exp, topic, grp?, passage?}]}`
   - a new set goes in `{subject}_2.json` and so on; its ids become `ak2-...`
 - `tools/template/` holds the page source: `head.html` (CSS), `extra.css`, and `body.html` (all JS; `__BANK__` is replaced with the data).
