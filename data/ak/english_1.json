@@ -1,0 +1,210 @@
+{
+"subject": "english",
+"id": "ak1",
+"label": "阿克提供・練習卷 1",
+"min": 25,
+"qs": [
+{
+"n": 1,
+"topic": "字彙",
+"html": "My brother is really into ______. He plays the guitar, the piano, and the drums.",
+"opts": [
+"drawing",
+"sports",
+"music",
+"cooking"
+],
+"ans": "C",
+"exp": "他會彈吉他、鋼琴和打鼓，所以他熱衷的是「音樂」（music）。be into 是「熱衷於」。"
+},
+{
+"n": 2,
+"topic": "字彙",
+"html": "It's raining cats and dogs outside. Don't forget to take your ______ with you.",
+"opts": [
+"fan",
+"gloves",
+"umbrella",
+"sunglasses"
+],
+"ans": "C",
+"exp": "raining cats and dogs 是「下傾盆大雨」，所以要帶傘（umbrella）。"
+},
+{
+"n": 3,
+"topic": "現在完成式",
+"html": "Amy loves Japanese food. She has ______ to Japan three times.",
+"opts": [
+"be",
+"been",
+"go",
+"went"
+],
+"ans": "B",
+"exp": "現在完成式 has/have + 過去分詞。have been to 表示「去過某地（已經回來）」，所以用 been。"
+},
+{
+"n": 4,
+"topic": "被動語態",
+"html": "This chocolate cake looks great! It ______ by my mom last night.",
+"opts": [
+"was made",
+"has made",
+"made",
+"is made"
+],
+"ans": "A",
+"exp": "蛋糕是「被做」的，用被動語態 be + 過去分詞；last night 是過去時間，所以用 was made。"
+},
+{
+"n": 5,
+"topic": "間接問句",
+"html": "Excuse me. Could you tell me ______ the next train will arrive?",
+"opts": [
+"which",
+"when",
+"what",
+"who"
+],
+"ans": "B",
+"exp": "問的是火車「什麼時候」到，間接問句用 when + 主詞 + 動詞：when the next train will arrive。"
+},
+{
+"n": 6,
+"topic": "最高級",
+"html": "Kevin is the ______ runner in our class. Nobody runs faster than he does.",
+"opts": [
+"fast",
+"fastest",
+"faster",
+"most fast"
+],
+"ans": "B",
+"exp": "沒有人跑得比他快，表示他是全班「最快」的。the + 最高級：the fastest。fast 是單音節，不用 most。"
+},
+{
+"n": 7,
+"topic": "條件句",
+"html": "If it ______ tomorrow, we will stay at home and watch movies.",
+"opts": [
+"rained",
+"will rain",
+"rains",
+"raining"
+],
+"ans": "C",
+"exp": "表示未來可能情況的 if 子句，用現在式代替未來式：If it rains tomorrow, we will…"
+},
+{
+"n": 8,
+"topic": "對話",
+"html": "Tom: Would you like some more tea?<br>Lisa: ______ I've had enough.",
+"opts": [
+"No, thanks.",
+"Here you are.",
+"Yes, please.",
+"Of course."
+],
+"ans": "A",
+"exp": "Lisa 說「我已經喝夠了」，所以要婉拒：No, thanks."
+},
+{
+"n": 9,
+"topic": "字彙",
+"html": "The movie was so ______ that I fell asleep halfway through it.",
+"opts": [
+"boring",
+"scary",
+"exciting",
+"interesting"
+],
+"ans": "A",
+"exp": "看到一半睡著了，表示電影很「無聊」（boring）。so…that… 表示「如此……以致於……」。"
+},
+{
+"n": 10,
+"topic": "主詞動詞一致",
+"html": "Neither Ben nor his sisters ______ at home right now. They are all at school.",
+"opts": [
+"is",
+"was",
+"are",
+"be"
+],
+"ans": "C",
+"exp": "neither A nor B 的動詞和較靠近的 B 一致；his sisters 是複數，加上 right now 用現在式，所以用 are。"
+},
+{
+"n": 11,
+"grp": "11～13",
+"topic": "閱讀：書信",
+"passage": "<p>Hi Grandma,</p><p>Thanks for the birthday card and the money! I used part of it to buy a new pair of running shoes, because my old ones were too small. I put the rest in the bank. I'm saving for a bike, so I can ride to school with my friends next year. Mom says if I save half of the price by December, she'll pay the other half.</p><p>School is busy. We have a big science fair next month, and my team is making a robot that can pick up trash. It's hard work, but it's fun.</p><p>Can you come for Christmas this year? We all miss you.</p><p>Love,<br>Owen</p>",
+"html": "Why did Owen buy new running shoes?",
+"opts": [
+"He joined a running team.",
+"His old ones were too small.",
+"His grandma asked him to.",
+"They were on sale."
+],
+"ans": "B",
+"exp": "信中說 because my old ones were too small，舊鞋太小了。"
+},
+{
+"n": 12,
+"grp": "11～13",
+"topic": "閱讀：書信",
+"html": "What do we know about the bike?",
+"opts": [
+"He will ride it to the science fair.",
+"Owen has already bought it.",
+"Grandma gave it to him as a gift.",
+"His mom will pay for half of it if he saves enough."
+],
+"ans": "D",
+"exp": "Mom says if I save half of the price by December, she'll pay the other half：如果他在12月前存到一半，媽媽會付另一半。他還在存錢，還沒買。"
+},
+{
+"n": 13,
+"grp": "11～13",
+"topic": "閱讀：書信",
+"html": "What is the main purpose of Owen's letter?",
+"opts": [
+"To invite Grandma to the science fair.",
+"To ask Grandma for more money.",
+"To explain how to build a robot.",
+"To thank Grandma and share his news."
+],
+"ans": "D",
+"exp": "信一開始感謝奶奶的卡片和錢，接著分享買鞋、存錢、科展的近況，最後邀請奶奶來過聖誕節。主要目的是道謝和分享近況。"
+},
+{
+"n": 14,
+"grp": "14～15",
+"topic": "閱讀：告示",
+"passage": "<p><b>City Swimming Pool — Summer Hours</b></p><p>Monday–Friday: 6:00 a.m.–9:00 p.m.<br>Saturday–Sunday: 8:00 a.m.–6:00 p.m.</p><p>Tickets: Adults $100 / Students (with ID) $60 / Children under 6: free</p><p>* Swimming caps are required. Caps can be bought at the front desk ($50).<br>* The pool is closed for cleaning on the first Monday of every month.</p>",
+"html": "Jenny, a junior high student, goes to the pool alone. She brings her student ID but forgets her swimming cap. How much does she need to pay?",
+"opts": [
+"$60",
+"$100",
+"$110",
+"$150"
+],
+"ans": "C",
+"exp": "學生票（有學生證）$60，加上一定要戴泳帽，要在櫃臺買一頂 $50，共 $110。"
+},
+{
+"n": 15,
+"grp": "14～15",
+"topic": "閱讀：告示",
+"html": "Which is true about the City Swimming Pool?",
+"opts": [
+"Children under 6 need to pay $60.",
+"You can swim there at 7:00 a.m. on Sunday.",
+"It is open until 9:00 p.m. on Saturday.",
+"It is closed on the first Monday of every month."
+],
+"ans": "D",
+"exp": "告示寫 closed for cleaning on the first Monday of every month。(B)(C)週末是 8:00 a.m.～6:00 p.m.；(A)6歲以下免費。"
+}
+]
+}
