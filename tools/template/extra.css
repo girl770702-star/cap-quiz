@@ -31,3 +31,50 @@ textarea.code{width:100%;min-height:90px;font:12px var(--f-mono);border:1px soli
 .inline-confirm{display:none}.inline-confirm.on{display:flex}
 @media print{aside.card,nav.tabs,header.top .src{display:none}}
 .txt table{border-collapse:collapse;margin:8px 0;font-size:14.5px;max-width:100%;display:block;overflow-x:auto}.txt th,.txt td{border:1px solid var(--rule);padding:3px 8px;text-align:center;white-space:nowrap}.txt th{background:var(--paper)}
+/* ---- 自然科重點筆記 ---- */
+.stat-w{overflow-x:auto}
+.stat-t{border-collapse:collapse;width:100%;font-size:14px}
+.stat-t th{font-size:12.5px;color:var(--muted);text-align:left;font-weight:700;padding:4px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}
+.stat-t td{padding:5px 8px;border-bottom:1px dashed var(--rule);white-space:nowrap}
+.stat-t td.num{font-variant-numeric:tabular-nums;text-align:right}
+.stat-t tr.g td{font-family:var(--f-display);font-weight:900;background:var(--paper);color:var(--muted);padding:6px 8px}
+.stat-t a{color:var(--ink);text-decoration:underline dotted}
+.stat-t td.bar{width:34%;min-width:90px}
+.stat-t .b1{display:block;height:10px;background:var(--rule);border-radius:2px}
+.stat-t .b2{display:block;height:10px;background:var(--red);border-radius:2px}
+.stat-t .tr small{color:var(--muted)}
+.stat-t .tr.up{color:var(--red);font-weight:700}.stat-t .tr.down{color:var(--ok);font-weight:700}
+details.nu{background:var(--sheet);border:1px solid var(--rule);border-radius:8px;margin-bottom:10px;scroll-margin-top:12px}
+details.nu>summary{cursor:pointer;padding:12px 14px;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;font-size:16px}
+details.nu>summary b{font-family:var(--f-display);font-size:18px}
+details.nu>summary:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.nu-s{font-size:12.5px;color:var(--muted)}
+.nu-b{padding:2px 16px 14px}
+.core{background:var(--paper);border-radius:6px;padding:8px 12px;margin:0 0 12px;font-size:14.5px}
+.np{border-top:1px dashed var(--rule);padding:12px 0}
+.np h4,.traps h4{margin:0 0 6px;font-size:16px}
+.pn{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--red);color:var(--sheet);font:600 13px var(--f-mono);margin-right:8px}
+.nh{max-width:72ch;font-size:15px;line-height:1.8}
+.nh p{margin:0 0 6px}.nh ul,.nh ol{margin:4px 0 6px;padding-left:1.4em}
+.nh table{border-collapse:collapse;margin:8px 0;font-size:14px;display:block;overflow-x:auto;max-width:100%}
+.nh th,.nh td{border:1px solid var(--rule);padding:4px 10px;text-align:left}
+.nh th{background:var(--paper)}
+.nsvg{margin:10px 0;padding:8px;background:var(--paper);border:1px solid var(--rule);border-radius:6px;max-width:520px}
+.nsvg svg{display:block;width:100%;height:auto;color:var(--ink);font-family:var(--f-body)}
+.traps{border-top:2px solid var(--warn);margin-top:6px;padding-top:10px}
+.traps h4{color:var(--warn)}
+.nt{margin:8px 0;padding:8px 12px;border-left:3px solid var(--warn);background:var(--paper);border-radius:0 6px 6px 0}
+.nt p{margin:2px 0 6px}
+.btn.ex{font-size:13.5px;padding:5px 12px;margin-top:6px}
+.nu-f{border-top:1px dashed var(--rule);padding-top:10px}
+@media print{
+  :root,:root[data-theme="dark"]{--paper:#fff;--sheet:#fff;--ink:#111;--muted:#444;--rule:#bbb;--red:#b3202e;--ok:#1a6a42;--warn:#9a4512;color-scheme:light}
+  body{background:#fff;font-size:12.5px}
+  .noprint,.btn,.ex{display:none!important}
+  .wrap{padding:0;max-width:none}
+  header.top{border-bottom:1px solid #999}
+  details.nu{break-inside:auto;border-color:#999}.np,.nt,.nsvg{break-inside:avoid}
+  .stat-t td,.stat-t th{padding:2px 6px}
+  .stat-t .b1{background:#ddd;-webkit-print-color-adjust:exact;print-color-adjust:exact}.stat-t .b2{background:#b3202e;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pn{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}

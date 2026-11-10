@@ -56,8 +56,16 @@ Reply to the user in Traditional Chinese (Taiwan), plainly, with no jargon. The 
   - each has `{subject, qs: [{n, html, opts[4], ans, exp, topic, grp?, passage?}]}`
   - a new set goes in `{subject}_2.json` and so on; its ids become `ak2-...`
 - `tools/template/` holds the page source: `head.html` (CSS), `extra.css`, and `body.html` (all JS; `__BANK__` is replaced with the data).
+- 自然科重點筆記 (the 「重點筆記」 page, science tab only; button is hidden if `data/notes/science.json` is missing):
+  - `data/notes/units.json`: the 28 units (id, group, name).
+  - `data/notes/science_class.json`: every official science question (104–115) → `{u: unit id, kw, tr}`. Made by looking at the question images and explanations; the 114/115 part was classified from `goal` + explanations without viewing images, so a few units may be off.
+  - `data/notes/science.json`: the written notes: per unit `core`, `points[{t, html, svg?, qs[]}]`, `traps[{t, d, qs[]}]`. `qs` are question ids that must belong to that unit.
+  - `build.py` validates it: HTML tags whitelist (p ul ol li b br sub sup span table…), SVG must be well-formed with no script/style/image and only internal `href="#id"`; it also prefixes every SVG id so figures never clash. It computes the 出題統計 (counts, 111+ trend, 114/115 average pass rate) from `science_class.json`.
+  - SVGs are hand-drawn, coloured only with CSS variables (`var(--ink)` etc.) so they work in dark mode and print. After editing one, render it to check: the usual way is a small HTML contact sheet + Edge headless `--screenshot`, because the in-app browser pane can be hidden.
+  - 「看例題」 / 「練習本單元」 start a `mode:'drill'` test (`startTest('drill', ids, label)`; whole 題組 are pulled in). A drill is saved in `cur` and `hist` like other tests (`m:'drill'`), answered questions count as seen and wrong ones go to 錯題區, so `seen/wrong/cur/hist/wa/opt` stays backward-compatible.
+  - Print: the 「列印／存成 PDF」 button calls `window.print()`; `@media print` in `extra.css` forces light colours and expands all units.
 - `tools/show.py`:
-  - `python3 tools/show.py 113 math` exports every question image of 113 math to `/tmp/show/*.png` and prints the answers.
+  - `python3 tools/show.py 113 math` exports every question image of 113 math to `/tmp/show/*.png` (set env `SHOW_OUT` to use another folder) and prints the answers.
   - `python3 tools/show.py 113-math-12` exports one question.
   - Read the PNGs to see the questions. Needs Pillow.
 
