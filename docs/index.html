@@ -222,10 +222,7 @@ function draw(s){
 function startTest(mode){
   let ids;
   if(mode==='wrong'){
-    const wr=wrongOf(s());const set=new Set(Object.keys(wr));
-    ids=BANK[s()].filter(q=>set.has(q.id)).map(q=>q.id);
-    // keep groups together, singles first
-    ids=[...ids.filter(id=>!byId[id].grp),...ids.filter(id=>byId[id].grp)];
+    ids=wrongIds(s());
   }else ids=draw(s());
   if(!ids.length)return;
   st.cur[s()]={mode,ids,ans:{},sub:false,t0:Date.now(),el:0};save();show();window.scrollTo(0,0);
@@ -254,11 +251,13 @@ function tabs(){
     const w=Object.keys(st.wrong[k]||{}).length, c=st.cur[k]&&!st.cur[k].sub;
     return `<button role="tab" aria-selected="${k===subj}" data-s="${k}"><b>${v.name}</b><span>${c?'作答中':'題庫 '+BANK[k].length}${w?' · 錯題 '+w:''}</span></button>`}).join('');
 }
-$('tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;subj=b.dataset.s;try{localStorage.setItem(KEY+'-tab',subj)}catch(_){}show();window.scrollTo(0,0)};
+$('tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;subj=b.dataset.s;view='home';try{localStorage.setItem(KEY+'-tab',subj)}catch(_){}show();window.scrollTo(0,0)};
 
+let view='home';
 function show(){tabs();const c=st.cur[subj];
-  if(c){$('home').classList.remove('on');$('test').classList.add('on');renderTest()}
-  else{$('test').classList.remove('on');$('home').classList.add('on');renderHome()}}
+  if(!c&&view==='review'&&!Object.keys(wrongOf(subj)).length)view='home';
+  if(c){view='home';$('home').classList.remove('on');$('test').classList.add('on');renderTest()}
+  else{$('test').classList.remove('on');$('home').classList.add('on');view==='review'?renderReview():renderHome()}}
 
 function renderHome(){
   const S=SUBJ[subj],qs=BANK[subj],wr=wrongOf(subj),seen=seenOf(subj);
@@ -279,6 +278,7 @@ function renderHome(){
     <div class="big-actions">
       <button class="btn primary" id="go" ${avail?'':'disabled'}>開始新測驗（${Math.min(S.n,avail)} 題・${S.min} 分鐘）</button>
       <button class="btn" id="gow" ${nw?'':'disabled'}>練習錯題區（${nw} 題）</button>
+      <button class="btn ghost" id="rev" ${nw?'':'disabled'}>瀏覽錯題</button>
     </div>
     <p class="muted" style="margin:12px 0 0">每次從題庫隨機抽 ${S.n} 題（和會考題數一樣），先抽沒做過的。答錯或沒作答的題目會進錯題區，不會再被抽到；在錯題區<b>連續答對 2 次</b>才移出，回到題庫。收錄 ${years[0]}–${years[years.length-1]} 年${subj==='english'?'（缺 108 年）':''}。${NOTE[subj]||''}</p>
   </div>
@@ -293,9 +293,10 @@ function renderHome(){
   <p class="muted">102、103 年的官方試卷是掃描檔，沒辦法切成單題，所以沒有收錄。詳解：較難的題目（全國答對率低於 6 成）會附說明，已完成 ${expYears(subj)}與阿克題，其他年份陸續補上。</p>
   </div>`;
   $('go').onclick=()=>startTest('test');$('gow').onclick=()=>startTest('wrong');
+  $('rev').onclick=()=>{view='review';show();window.scrollTo(0,0)};
   $('mk').onclick=async()=>{$('code').value=await exportCode();$('cp').hidden=false;msg('備份碼已產生。請整段複製保存。')};
   $('cp').onclick=async()=>{try{await navigator.clipboard.writeText($('code').value);msg('已複製')}catch(e){$('code').select();msg('請長按文字框選取後複製',1)}};
-  $('rs').onclick=async()=>{try{const o=await importCode($('code').value.trim());st.seen=o.seen||{};st.wrong=o.wrong||{};st.hist=o.hist||{};save();show();setTimeout(()=>msg('已還原紀錄'),0)}catch(e){msg('備份碼無法讀取，請確認整段都有貼上',1)}};
+  $('rs').onclick=async()=>{try{const o=await importCode($('code').value.trim());st.seen=o.seen||{};st.wrong=o.wrong||{};st.hist=o.hist||{};st.wa=o.wa||{};save();show();setTimeout(()=>msg('已還原紀錄'),0)}catch(e){msg('備份碼無法讀取，請確認整段都有貼上',1)}};
 }
 function msg(t,err){const m=$('bmsg');if(m){m.textContent=t;m.className='msg'+(err?' err':'')}}
 
@@ -304,7 +305,7 @@ const b64e=u8=>{let s='';for(let i=0;i<u8.length;i+=0x8000)s+=String.fromCharCod
 const b64d=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
 async function pipe(u8,T){return new Uint8Array(await new Response(new Blob([u8]).stream().pipeThrough(new T('deflate-raw'))).arrayBuffer())}
 async function exportCode(){
-  const raw=new TextEncoder().encode(JSON.stringify({seen:st.seen,wrong:st.wrong,hist:st.hist}));
+  const raw=new TextEncoder().encode(JSON.stringify({seen:st.seen,wrong:st.wrong,hist:st.hist,wa:st.wa||{}}));
   if(window.CompressionStream){try{return 'CAP1:'+b64e(await pipe(raw,CompressionStream))}catch(e){}}
   return 'CAP0:'+b64e(raw);
 }
@@ -314,6 +315,29 @@ async function importCode(t){t=t.replace(/\s+/g,'');
   throw new Error('bad');
 }
 
+function wrongIds(s){const set=new Set(Object.keys(wrongOf(s)));const ids=BANK[s].filter(q=>set.has(q.id)).map(q=>q.id);
+  return [...ids.filter(id=>!byId[id].grp),...ids.filter(id=>byId[id].grp)]}
+function renderReview(){
+  const S=SUBJ[subj],ids=wrongIds(subj),wr=wrongOf(subj),wa=st.wa||{};
+  let h=`<div class="box" style="margin-bottom:16px"><h3>${S.name}・瀏覽錯題（${ids.length} 題）</h3>
+    <p class="muted" style="margin:0 0 12px">先看一遍正確答案和詳解，再按「開始練習」作答。在錯題區連續答對 2 次，題目才會移出。</p>
+    <div class="row"><button class="btn ghost" id="back">← 回到首頁</button><button class="btn primary" id="gow2">開始練習錯題區</button><button class="btn ghost" id="tog">全部展開詳解</button></div></div>`;
+  let lastG=null;
+  ids.forEach((id,i)=>{const q=byId[id];
+    if(q.grp&&q.grp!==lastG)h+=`<div class="passage"><div class="lbl">題組・閱讀內容（${q.y==='ak'?'阿克提供':q.y+'年會考'}）</div>${q.pimg?imgTag(q.pk,q.pimg):`<div class="txt">${q.passage||''}</div>`}</div>`;
+    lastG=q.grp||null;
+    const last=wa[id];
+    h+=`<div class="q"><div class="qhead"><span class="qno">${i+1}.</span><span class="tag${q.y==='ak'?' ak':''}">${srcLabel(q)}</span><span class="streak">已連對 ${wr[id]||0} 次</span></div>`;
+    if(q.img)h+=imgTag(q.pk,q.img);
+    else h+=`<div class="txt"><p class="stem">${q.html}</p><ol class="opts">${q.opts.map((o,k)=>`<li><span>(${L[k]})</span>${o}</li>`).join('')}</ol></div>`;
+    h+=`<div class="choices"><span class="verdict ok" style="margin-left:0">正確答案 (${q.ans})</span>${last!==undefined?`<span class="verdict ${last?'no':'skip'}" style="margin-left:0">${last?'上次選 ('+last+')':'上次沒作答'}</span>`:''}</div>`;
+    h+=expHtml(q,false)+'</div>';
+  });
+  $('home').innerHTML=h;fillImgs($('home'));
+  $('back').onclick=()=>{view='home';show();window.scrollTo(0,0)};
+  $('gow2').onclick=()=>{view='home';startTest('wrong')};
+  $('tog').onclick=()=>{const d=[...$('home').querySelectorAll('details.exp')],o=!d.every(x=>x.open);d.forEach(x=>x.open=o);$('tog').textContent=o?'全部收合詳解':'全部展開詳解'};
+}
 function qBody(q,i,c){
   const sel=c.ans[q.id], sub=c.sub, ok=sel===q.ans;
   const wr=wrongOf(subj)[q.id];
@@ -323,16 +347,16 @@ function qBody(q,i,c){
   h+=`<div class="choices" role="group" aria-label="第${i+1}題"><span class="qn">${i+1}</span>${[...L].map(x=>`<button class="bub${sub&&x===q.ans?' is-ans':''}" data-i="${i}" data-a="${x}" aria-pressed="${sel===x}" ${sub?'disabled':''}>${x}</button>`).join('')}`;
   if(sub)h+=`<span class="verdict ${sel?(ok?'ok':'no'):'skip'}">${sel?(ok?'答對':'答錯，正解 '+q.ans):'未作答，正解 '+q.ans}</span>`;
   h+='</div>';
-  if(sub){
-    const open=!ok;
+  if(sub)h+=expHtml(q,!ok);
+  return h+'</div>';
+}
+function expHtml(q,open){
     let body;
     if(q.exp)body=`<p class="exp-body"><b>(${q.ans})</b>${esc(q.exp)}</p>`;
     else if(q.pr!=null&&q.pr>=60)body=`<p class="exp-body"><b>(${q.ans})</b>這題屬於基本題，全國答對率 ${q.pr}%，對照答案再看一次題目應該就能理解。</p>`;
     else body=`<p class="exp-body"><b>(${q.ans})</b>詳解補充中。</p>`;
     const meta=[q.goal?'評量目標：'+esc(q.goal):'',q.pr!=null?'全國答對率 '+q.pr+'%':'',q.topic?'單元：'+esc(q.topic):''].filter(Boolean);
-    h+=`<details class="exp"${open?' open':''}><summary>詳解</summary>${body}${meta.length?`<p class="exp-meta">${meta.map(m=>`<span>${m}</span>`).join('')}</p>`:''}</details>`;
-  }
-  return h+'</div>';
+    return `<details class="exp"${open?' open':''}><summary>詳解</summary>${body}${meta.length?`<p class="exp-meta">${meta.map(m=>`<span>${m}</span>`).join('')}</p>`:''}</details>`;
 }
 function renderTest(){
   const c=st.cur[subj],S=SUBJ[subj];
@@ -394,8 +418,10 @@ $('grid').onclick=e=>{const b=e.target.closest('.cell');if(!b)return;openCard(fa
 function submit(){
   const c=st.cur[subj],wr=wrongOf(subj),seen=seenOf(subj);let ok=0,out=0;
   c.el=Date.now()-c.t0;
+  const wa=st.wa||(st.wa={});
   for(const id of c.ids){const right=c.ans[id]===byId[id].ans;if(right)ok++;seen.add(id);
-    if(c.mode==='wrong'){if(right){wr[id]=(wr[id]||0)+1;if(wr[id]>=2){delete wr[id];out++}}else wr[id]=0}
+    if(!right)wa[id]=c.ans[id]||'';
+    if(c.mode==='wrong'){if(right){wr[id]=(wr[id]||0)+1;if(wr[id]>=2){delete wr[id];delete wa[id];out++}}else wr[id]=0}
     else if(!right)wr[id]=0;
   }
   const n=c.ids.length;let g=null;

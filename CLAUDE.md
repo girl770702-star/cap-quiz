@@ -23,7 +23,7 @@ Reply to the user in Traditional Chinese (Taiwan), plainly, with no jargon. The 
   - a wrong or unanswered question goes in and is left out of random draws
   - it leaves only after **2 consecutive correct** answers inside the 錯題區
 - State is kept in the tablet browser's localStorage (key `cap-quiz-v1`).
-  - Keep that key and its data shape (`seen/wrong/cur/hist`) backward-compatible, or the child loses records.
+  - Keep that key and its data shape (`seen/wrong/cur/hist/wa`; `wa` records the last answers, used by 瀏覽錯題) backward-compatible, or the child loses records.
   - A 備份碼 (backup code) on the page exports and imports that state.
 - After a test is submitted:
   - each question shows its explanation if it has one
