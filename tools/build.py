@@ -24,6 +24,9 @@ for q in src['questions']:
         q['exp'] = e
     m = meta.get(y, {}).get(s, {}).get(n)
     if m: q['goal'] = m.get('goal', ''); q['pr'] = m['pr']
+    # lv: 0 基礎, 1 中等, 2 較難 (by national pass rate); 3 中等以上 (Claude's own judgement: only years without pass-rate data, and it got an explanation)
+    if 'pr' in q: q['lv'] = 0 if q['pr'] >= 60 else (1 if q['pr'] >= 40 else 2)
+    elif (y, s) in exp: q['lv'] = 3 if q.get('exp') else 0
     bank[s].append(q)
 for (y, s), m in exp.items():
     ids = {str(q['n']) for q in bank[s] if q['y'] == y}

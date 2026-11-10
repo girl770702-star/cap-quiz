@@ -189,7 +189,7 @@ function renderReview(){
     if(q.grp&&q.grp!==lastG)h+=`<div class="passage"><div class="lbl">題組・閱讀內容（${q.y==='ak'?'阿克提供':q.y+'年會考'}）</div>${q.pimg?imgTag(q.pk,q.pimg):`<div class="txt">${q.passage||''}</div>`}</div>`;
     lastG=q.grp||null;
     const last=wa[id];
-    h+=`<div class="q"><div class="qhead"><span class="qno">${i+1}.</span><span class="tag${q.y==='ak'?' ak':''}">${srcLabel(q)}</span><span class="streak">已連對 ${wr[id]||0} 次</span></div>`;
+    h+=`<div class="q"><div class="qhead"><span class="qno">${i+1}.</span><span class="tag${q.y==='ak'?' ak':''}">${srcLabel(q)}</span>${lvTag(q)}<span class="streak">已連對 ${wr[id]||0} 次</span></div>`;
     if(q.img)h+=imgTag(q.pk,q.img);
     else h+=`<div class="txt"><p class="stem">${q.html}</p><ol class="opts">${q.opts.map((o,k)=>`<li><span>(${L[k]})</span>${o}</li>`).join('')}</ol></div>`;
     h+=`<div class="choices"><span class="verdict ok" style="margin-left:0">正確答案 (${q.ans})</span>${last!==undefined?`<span class="verdict ${last?'no':'skip'}" style="margin-left:0">${last?'上次選 ('+last+')':'上次沒作答'}</span>`:''}</div>`;
@@ -203,7 +203,7 @@ function renderReview(){
 function qBody(q,i,c){
   const sel=c.ans[q.id], sub=c.sub, ok=sel===q.ans;
   const wr=wrongOf(subj)[q.id];
-  let h=`<div class="q${sub?(ok?' right':' wrong'):''}" id="q-${i}"><div class="qhead"><span class="qno">${i+1}.</span><span class="tag${q.y==='ak'?' ak':''}">${srcLabel(q)}</span>${c.mode==='wrong'&&wr!==undefined&&!sub?`<span class="streak">已連對 ${wr} 次</span>`:''}</div>`;
+  let h=`<div class="q${sub?(ok?' right':' wrong'):''}" id="q-${i}"><div class="qhead"><span class="qno">${i+1}.</span><span class="tag${q.y==='ak'?' ak':''}">${srcLabel(q)}</span>${lvTag(q)}${c.mode==='wrong'&&wr!==undefined&&!sub?`<span class="streak">已連對 ${wr} 次</span>`:''}</div>`;
   if(q.img)h+=imgTag(q.pk,q.img);
   else h+=`<div class="txt"><p class="stem">${q.html}</p><ol class="opts">${q.opts.map((o,k)=>`<li><span>(${L[k]})</span>${o}</li>`).join('')}</ol></div>`;
   h+=`<div class="choices" role="group" aria-label="第${i+1}題"><span class="qn">${i+1}</span>${[...L].map(x=>`<button class="bub${sub&&x===q.ans?' is-ans':''}" data-i="${i}" data-a="${x}" aria-pressed="${sel===x}" ${sub?'disabled':''}>${x}</button>`).join('')}`;
@@ -212,10 +212,17 @@ function qBody(q,i,c){
   if(sub)h+=expHtml(q,!ok);
   return h+'</div>';
 }
+const LV=['基礎','中等','較難','中等以上'];
+function lvTag(q){
+  if(q.lv===undefined)return '';
+  const tip=q.pr!=null?'依全國答對率 '+q.pr+'%':'阿克判斷：有詳解的是較難的題，沒詳解的是較簡單的題';
+  return `<span class="lv lv${q.lv}" title="${tip}">難度：${LV[q.lv]}</span>`;
+}
 function expHtml(q,open){
     let body;
     if(q.exp)body=`<p class="exp-body"><b>(${q.ans})</b>${esc(q.exp)}</p>`;
     else if(q.pr!=null&&q.pr>=60)body=`<p class="exp-body"><b>(${q.ans})</b>這題屬於基本題，全國答對率 ${q.pr}%，對照答案再看一次題目應該就能理解。</p>`;
+    else if(q.lv===0)body=`<p class="exp-body"><b>(${q.ans})</b>這題屬於基礎題（阿克判斷較簡單），所以沒有另外寫詳解，對照答案再看一次題目應該就能理解。</p>`;
     else body=`<p class="exp-body"><b>(${q.ans})</b>詳解補充中。</p>`;
     const meta=[q.goal?'評量目標：'+esc(q.goal):'',q.pr!=null?'全國答對率 '+q.pr+'%':'',q.topic?'單元：'+esc(q.topic):''].filter(Boolean);
     return `<details class="exp"${open?' open':''}><summary>詳解</summary>${body}${meta.length?`<p class="exp-meta">${meta.map(m=>`<span>${m}</span>`).join('')}</p>`:''}</details>`;

@@ -29,6 +29,12 @@ Reply to the user in Traditional Chinese (Taiwan), plainly, with no jargon. The 
   - each question shows its explanation if it has one
   - an easy question (pass rate 60% or higher) with no explanation shows a short "basic question" note
   - any other question without one shows 「詳解補充中」 ("explanation coming")
+  - every official question also shows a 難度 chip (`lv`, computed in `tools/build.py`):
+    - with pass-rate data (114, 115): 基礎 (pr 60+), 中等 (40–59), 較難 (below 40)
+    - other years: 中等以上 if it has an explanation, 基礎 if not (Claude's own judgement, because a year-subject whose explanation file exists has already been screened)
+    - a 基礎 question with no explanation says it is a basic question, so the child does not think the explanation is missing
+    - 「詳解補充中」 now shows only for a year-subject that has no explanation file yet
+    - 阿克 questions have no chip
   - the grade estimate uses the 115 cutoffs
 - The PDF button uses jsPDF from cdnjs and downloads a PDF of the current test with an answer key.
 
