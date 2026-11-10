@@ -90,3 +90,24 @@ Accuracy matters more than speed. If you are unsure about a question, re-read th
   - Source papers and scoring guides are at https://cap.rcpet.edu.tw/ under 歷屆試題.
 - More 阿克 question sets, written in the style of the official questions.
 - Grade cutoffs are in `CUT` in `body.html` (the 115 table).
+
+## Adding a new year (for example 116, after that year's exam)
+The tools are in `tools/crop/`. They need Python with `pymupdf`, `pillow` and `numpy` (`pip install pymupdf pillow numpy`), plus `pdftotext` (poppler) for `parse_ana.py`. `work/` is git-ignored scratch space.
+
+1. Download the official PDFs from https://cap.rcpet.edu.tw/ (歷屆試題). The browser may be needed, because the site can block scripts.
+2. Save them in `work/y116/pdf/` with these names:
+   - `answer.pdf` (the 參考答案)
+   - `chinese.pdf`, `english.pdf` (閱讀), `math.pdf`, `social.pdf`, `science.pdf`
+   - optionally the 試題分析 PDFs as `ana_chinese.pdf`, `ana_english.pdf`, and so on (these hold the pass rates)
+3. Run `python3 tools/crop/build_year.py 116`.
+   - It reads the answer key, crops each question and each 題組 passage into `work/img/116_*.png`, and writes `work/y116/items.json`.
+   - If a paper fails, it prints `SKIP`. For a subject whose paper PDF is too big or broken, crop from the analysis PDF instead: `python3 tools/crop/crop_ana.py 116 social`.
+4. **Check the crops.** Open a good sample of `work/img/116_*.png`. Look for figures that are cut off, a question that includes part of the next one, or a passage merged into a question.
+   - `crop.py` has many layout rules learned from 104–115; a new year's layout may need a small tweak.
+   - The question count must match the answer key: 國文 42, 英語閱讀 43, 社會 54, 自然 50, and the math multiple-choice count (25 or 26).
+5. Run `python3 tools/crop/add_year.py 116`. It writes `docs/pk/116_*.wasm` and adds the questions to `data/questions.json`.
+6. Optionally run `python3 tools/crop/parse_ana.py 116`. It writes `data/meta/116.json` (pass rates and goals).
+7. Update `CUT` in `tools/template/body.html` to the new year's 等級 cutoff table if the user wants. Also update the year range shown in the header text of `body.html`.
+8. Run `python3 tools/build.py`, check the site in a browser, then commit and push. Then write explanations for the new year as described above.
+
+The tools were tested by re-cropping 110: the output was byte-identical to the published packs.
