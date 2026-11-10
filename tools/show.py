@@ -7,7 +7,7 @@ import json, os, sys, io
 from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 src = json.load(open(os.path.join(ROOT, 'data', 'questions.json')))
-packs = src['packs']; out = '/tmp/show'; os.makedirs(out, exist_ok=True)
+packs = src['packs']; out = os.environ.get('SHOW_OUT', '/tmp/show'); os.makedirs(out, exist_ok=True)
 _buf = {}
 def png(pk, name):
     if pk not in _buf: _buf[pk] = open(os.path.join(ROOT, 'docs', 'pk', pk + '.wasm'), 'rb').read()
