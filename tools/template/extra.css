@@ -78,3 +78,23 @@ details.nu>summary:focus-visible{outline:2px solid var(--red);outline-offset:2px
   .stat-t .b1{background:#ddd;-webkit-print-color-adjust:exact;print-color-adjust:exact}.stat-t .b2{background:#b3202e;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .pn{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+/* ---- 解題步驟示範 / 補充 ---- */
+.demo{border-top:1px dashed var(--rule);padding:12px 0}
+.demo h4{margin:0 0 6px;font-size:16px;color:var(--ok)}
+.demo .imgbox{margin:6px 0 10px}
+.steps{margin:6px 0 8px;padding-left:1.6em;line-height:1.9;max-width:72ch}
+.steps li{margin:2px 0}
+.demo-ans{margin:6px 0 4px;padding:6px 12px;background:var(--ok-soft);border-left:3px solid var(--ok);border-radius:0 6px 6px 0;font-weight:700}
+details.nu.extra{border-color:var(--ok)}
+@media print{.demo,.np{break-inside:avoid}.demo-ans{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+/* ---- 公式標示 ---- */
+:root{--fm-bg:#fff0b0;--fm-line:#d9a400}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--fm-bg:#4d3f10;--fm-line:#c9a227}}
+:root[data-theme="dark"]{--fm-bg:#4d3f10;--fm-line:#c9a227}
+.fm{background:var(--fm-bg);border-bottom:2px solid var(--fm-line);border-radius:3px;padding:1px 6px;font-weight:600}
+.fmbox{background:var(--sheet);border:1.5px solid var(--fm-line);border-radius:8px;padding:8px 14px 6px;margin:0 0 12px}
+.fmbox h4{margin:0 0 4px;font-size:14.5px}
+.fmbox ul{margin:0;padding:0;list-style:none}
+.fmbox li{line-height:2;margin:0}
+@media print{:root,:root[data-theme="dark"]{--fm-bg:#fff0b0;--fm-line:#d9a400}.fm,.fmbox{-webkit-print-color-adjust:exact;print-color-adjust:exact}}

@@ -135,7 +135,7 @@ $('tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;subj=b.dat
 let view='home';
 function show(){tabs();const c=st.cur[subj];
   if(!c&&view==='review'&&!Object.keys(wrongOf(subj)).length)view='home';
-  if(view==='notes'&&(subj!=='science'||!NOTES))view='home';
+  if(view==='notes'&&!(NOTES&&NOTES[subj]))view='home';
   if(c){view='home';$('home').classList.remove('on');$('test').classList.add('on');renderTest()}
   else{$('test').classList.remove('on');$('home').classList.add('on');view==='review'?renderReview():view==='notes'?renderNotes():renderHome()}}
 
@@ -165,7 +165,7 @@ function renderHome(){
     <p class="muted" style="margin:12px 0 0">每次從題庫隨機抽 ${S.n} 題（和會考題數一樣），先抽沒做過的。${newOnly()?'目前只出 111 年以後（108 課綱）和阿克題。':'約 7 成抽 111 年以後（108 課綱）和阿克題，3 成抽 104–110 年的舊題。'}答錯或沒作答的題目會進錯題區，不會再被抽到；在錯題區<b>連續答對 2 次</b>才移出，回到題庫。收錄 ${years[0]}–${years[years.length-1]} 年${subj==='english'?'（缺 108 年）':''}。${NOTE[subj]||''}</p>
   </div>
   ${h.length?`<div class="box"><h3>最近紀錄</h3><ul class="hist">${h.map(r=>`<li><span>${r.d} <span class="m">${r.m==='wrong'?'錯題區':r.m==='drill'?'例題練習':'測驗'}</span></span><span>${r.ok}/${r.n}${r.g?'・'+r.g:''}${r.out?` <span class="m">移出 ${r.out}</span>`:''}</span></li>`).join('')}</ul></div>`:''}
-  ${subj==='science'&&NOTES?`<div class="box"><h3>重點筆記</h3><p class="muted" style="margin:0 0 10px">依 104–115 年歷屆考題整理：各單元考幾次、必背重點、常見陷阱，每個重點都能直接練例題。可以列印或存成 PDF。</p><div class="row"><button class="btn primary" id="notes">打開自然科重點筆記</button></div></div>`:''}
+  ${NOTES&&NOTES[subj]?`<div class="box"><h3>重點筆記</h3><p class="muted" style="margin:0 0 10px">依 104–115 年歷屆考題整理：各單元考幾次、必背重點、${subj==='math'?'解題步驟示範、':''}常見陷阱${subj==='math'?'、非選擇題作答技巧':''}，每個重點都能直接練例題。可以列印或存成 PDF。</p><div class="row"><button class="btn primary" id="notes">打開${S.name}重點筆記</button></div></div>`:''}
   <div class="box">
     <h3>備份紀錄</h3>
     <p class="muted" style="margin:0 0 10px">紀錄存在這台平板的瀏覽器裡。清除瀏覽資料或換裝置前，先按「產生備份碼」，把整段文字存到記事本或傳給自己；之後貼回下面的框，按「還原」。</p>
@@ -183,17 +183,18 @@ function renderHome(){
   $('cp').onclick=async()=>{try{await navigator.clipboard.writeText($('code').value);msg('已複製')}catch(e){$('code').select();msg('請長按文字框選取後複製',1)}};
   $('rs').onclick=async()=>{try{const o=await importCode($('code').value.trim());st.seen=o.seen||{};st.wrong=o.wrong||{};st.hist=o.hist||{};st.wa=o.wa||{};save();show();setTimeout(()=>msg('已還原紀錄'),0)}catch(e){msg('備份碼無法讀取，請確認整段都有貼上',1)}};
 }
-/* ---------- 自然科重點筆記 ---------- */
-const GROUPS=['科學探究','生物','化學','物理','地球科學'];
+/* ---------- 重點筆記（每一科各自有資料時才出現） ---------- */
 const newYr=y=>+y>=111;
 const nNew=u=>Object.entries(u.yrs).filter(([y])=>newYr(y)).reduce((a,[,k])=>a+k,0);
 function trendOf(u){const nw=nNew(u),o=u.n-nw,po=o/7,pn=nw/5;
   if(pn>=po*1.3)return['↑','近年變多','up'];if(pn<=po*0.7)return['↓','近年變少','down'];return['→','差不多','flat']}
 function exBtn(qs,label,unit,all){return qs&&qs.length?`<button class="btn ghost ex" ${all?'data-all="1" ':''}data-qs="${qs.join(',')}" data-label="${esc(unit)}">${label}（${all?Math.min(20,qs.length):qs.length} 題）</button>`:''}
+const figs=a=>(a||[]).map(v=>`<figure class="nsvg">${v}</figure>`).join('');
 function renderNotes(){
-  const U=NOTES.units,maxN=Math.max(...U.map(u=>u.n));
-  let h=`<div class="box noprint" style="margin-bottom:16px"><h3>自然科重點筆記</h3>
-   <p class="muted" style="margin:0 0 12px">資料來自 104–115 年共 ${U.reduce((a,u)=>a+u.n,0)} 題自然科歷屆考題，逐題分到課本單元。點「看例題」會直接出那幾題讓你練習。</p>
+  const S=SUBJ[subj],N=NOTES[subj],U=N.units,maxN=Math.max(...U.map(u=>u.n)),GROUPS=[...new Set(U.map(u=>u.g))];
+  const isMath=subj==='math';
+  let h=`<div class="box noprint" style="margin-bottom:16px"><h3>${S.name}重點筆記</h3>
+   <p class="muted" style="margin:0 0 12px">資料來自 104–115 年共 ${U.reduce((a,u)=>a+u.n,0)} 題${S.name}歷屆考題${isMath?'（選擇題）':''}，逐題分到課本單元。點「看例題」會直接出那幾題讓你練習。<b>黃底標示的是必背公式</b>，每個單元最上面也會把公式集中列出來。</p>
    <div class="row"><button class="btn ghost" id="nback">← 回到首頁</button><button class="btn primary" id="nprint">列印／存成 PDF</button><button class="btn ghost" id="ntog">全部展開</button></div></div>`;
   h+=`<div class="box notes-stat"><h3>各單元出題次數</h3><p class="muted" style="margin:0 0 10px">長條是 104–115 年的總題數（深色是 111 年以後，即 108 課綱）。箭頭比較「近 5 年（111–115）每年平均」和「前 7 年（104–110）每年平均」：↑ 近年變多，↓ 近年變少。114、115 年才有官方答對率，所以「答對率」只看這兩年（至少 2 題才列）。</p>
    <div class="stat-w"><table class="stat-t"><thead><tr><th>單元</th><th>題數</th><th></th><th>111 後</th><th>趨勢</th><th>答對率</th></tr></thead><tbody>`;
@@ -205,6 +206,10 @@ function renderNotes(){
       <td class="num">${nw}</td><td class="tr ${t[2]}" title="${t[1]}">${t[0]} <small>${t[1]}</small></td><td class="num">${u.pr!=null?u.pr+'%':'—'}</td></tr>`}
   }
   h+=`</tbody></table></div></div>`;
+  if(N.extra&&N.extra.length){
+    h+=`<div class="section-h">${isMath?'非選擇題作答技巧':'補充'}</div>`;
+    N.extra.forEach((x,i)=>{h+=`<details class="nu extra" id="nx-${i}"><summary><b>${esc(x.t)}</b></summary><div class="nu-b"><div class="nh">${x.html}</div>${figs(x.svg)}</div></details>`});
+  }
   for(const g of GROUPS){
     h+=`<div class="section-h">${g}</div>`;
     for(const u of U.filter(x=>x.g===g)){
@@ -213,18 +218,22 @@ function renderNotes(){
       if(!u.points){h+=`<p class="muted">這個單元的筆記還在整理中。</p>`}
       else{
         if(u.core)h+=`<p class="core"><b>會考常考：</b>${esc(u.core)}</p>`;
+        {const fms=[];u.points.forEach(p=>{(p.html.replace(/<table[\s\S]*?<\/table>/g,'').match(/<span class="fm">.*?<\/span>/g)||[]).forEach(m=>{if(!fms.includes(m))fms.push(m)})});
+         if(fms.length)h+=`<div class="fmbox"><h4>本單元必背公式</h4><ul>${fms.map(f=>`<li>${f}</li>`).join('')}</ul></div>`}
         u.points.forEach((p,i)=>{
-          h+=`<div class="np"><h4><span class="pn">${i+1}</span>${esc(p.t)}</h4><div class="nh">${p.html}</div>${(p.svg||[]).map(v=>`<figure class="nsvg">${v}</figure>`).join('')}${exBtn(p.qs,'看例題',u.name+'・'+p.t)}</div>`});
+          h+=`<div class="np"><h4><span class="pn">${i+1}</span>${esc(p.t)}</h4><div class="nh">${p.html}</div>${figs(p.svg)}${exBtn(p.qs,'看例題',u.name+'・'+p.t)}</div>`});
+        if(u.demo){const d=u.demo,q=byId[d.q];
+          h+=`<div class="demo"><h4>解題步驟示範${d.t?'：'+esc(d.t):''}</h4><p class="muted">原題：${q?srcLabel(q):d.q}</p>${q&&q.pimg?imgTag(q.pk,q.pimg):''}${q&&q.img?imgTag(q.pk,q.img):''}${figs(d.svg)}<ol class="steps">${(d.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>${d.ans?`<p class="demo-ans">${d.ans}</p>`:''}${exBtn([d.q],'自己做做看',u.name+'・解題示範')}</div>`}
         if(u.traps&&u.traps.length){
           h+=`<div class="traps"><h4>常見陷阱</h4>`;
-          u.traps.forEach(p=>{h+=`<div class="nt"><b>${esc(p.t)}</b><p>${esc(p.d||'')}</p>${exBtn(p.qs,'看例題',u.name+'・'+p.t)}</div>`});
+          u.traps.forEach(p=>{h+=`<div class="nt"><b>${esc(p.t)}</b><p>${p.d||''}</p>${exBtn(p.qs,'看例題',u.name+'・'+p.t)}</div>`});
           h+=`</div>`}
       }
       h+=`<div class="nu-f noprint">${exBtn(u.qs,'練習本單元',u.name,true)}</div>`;
       h+=`</div></details>`;
     }
   }
-  $('home').innerHTML=h;
+  $('home').innerHTML=h;fillImgs($('home'));
   $('nback').onclick=()=>{view='home';show();window.scrollTo(0,0)};
   $('nprint').onclick=()=>{openAllNotes(true);setTimeout(()=>window.print(),50)};
   $('ntog').onclick=()=>{const d=[...$('home').querySelectorAll('details.nu')],o=!d.every(x=>x.open);d.forEach(x=>x.open=o);$('ntog').textContent=o?'全部收合':'全部展開'};

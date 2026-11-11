@@ -56,6 +56,13 @@ Reply to the user in Traditional Chinese (Taiwan), plainly, with no jargon. The 
   - each has `{subject, qs: [{n, html, opts[4], ans, exp, topic, grp?, passage?}]}`
   - a new set goes in `{subject}_2.json` and so on; its ids become `ak2-...`
 - `tools/template/` holds the page source: `head.html` (CSS), `extra.css`, and `body.html` (all JS; `__BANK__` is replaced with the data).
+- 公式標示 (both subjects): inside a note point's `html`, a must-memorize formula is wrapped as `<span class="fm">…</span>` (yellow highlight). The only class `build.py` accepts is `fm`. The page also collects each unit's `fm` spans (outside tables) into a 「本單元必背公式」 box at the top of the unit. Mark formulas, definitions of formulas and laws, not worked examples (「例：…」). When editing a point's html, keep the spans.
+- 數學科重點筆記 (same 「重點筆記」 page on the math tab; button hidden if `data/notes/math.json` is missing). It reuses everything below, with these differences:
+  - files: `data/notes/math_units.json` (21 units N1–S2: 數與量, 代數, 函數與坐標, 幾何, 統計與機率), `data/notes/math_class.json` (every math multiple-choice question 104–115 → unit, classified by viewing the images), `data/notes/math.json`.
+  - each unit also has `demo`: a worked example `{t, q, steps[], ans, svg?}` on a real past question (the page shows that question's image above the steps). `q` must belong to the unit; the steps must reproduce the official answer.
+  - `math.json` has a top-level `extra[{t, html, svg?}]` = 非選擇題作答技巧 (shown above the units). It deliberately contains no scoring numbers; it points to the official scoring notes at cap.rcpet.edu.tw.
+  - math content must stay inside the junior-high syllabus (no trigonometric functions). Every number in an example was checked with python; geometry SVGs were drawn from computed coordinates.
+  - `build.py` loops over `NOTE_FILES` (science, math); to add a subject, add its three files and one entry there.
 - 自然科重點筆記 (the 「重點筆記」 page, science tab only; button is hidden if `data/notes/science.json` is missing):
   - `data/notes/units.json`: the 28 units (id, group, name).
   - `data/notes/science_class.json`: every official science question (104–115) → `{u: unit id, kw, tr}`. Made by looking at the question images and explanations; the 114/115 part was classified from `goal` + explanations without viewing images, so a few units may be off.
